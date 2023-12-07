@@ -1,0 +1,6 @@
+ansible_user: joshua
+ansible_password: "{{ sudo_password }}"
+ansible_connection: ssh
+ansible_become: yes
+ansible_become_method: sudo
+ansible_become_pass: "{{ sudo_password }}"
