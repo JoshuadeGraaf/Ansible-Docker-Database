@@ -1,0 +1,6 @@
+- hosts: LinuxServers
+  gather_facts: true
+  become: true
+  roles:
+  - { role: database_docker, tags: [ 'db']}
+  - { role: create_tables, tags: [ 'tables']}
