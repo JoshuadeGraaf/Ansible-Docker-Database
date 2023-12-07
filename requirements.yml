@@ -1,0 +1,8 @@
+collections:
+  - name: community.mysql
+    version: 1.3.0
+
+roles:
+  - name: bertvv/ansible-role-mariadb
+    src: https://github.com/bertvv/ansible-role-mariadb
+    version: master
