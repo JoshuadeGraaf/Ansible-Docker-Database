@@ -1,0 +1,9 @@
+ansible_host: 192.168.81.134
+ansible_user: joshua
+homedir: /home/joshua
+
+mysql:
+  mysql_root_password: "{{ sudo_password }}"
+  mysql_database: "Kerntaak"
+  mysql_user: "{{ ansible_user }}"
+  mysql_user_password: "{{ sudo_password }}"
