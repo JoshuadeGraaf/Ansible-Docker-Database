@@ -1,0 +1,69 @@
+- name: zorg ervoor dat docker groep bestaat
+  group:
+    name: docker
+    state: present
+
+- name: zorg ervoor dat de user in sudo en docker zit
+  user:
+    name: "{{ ansible_user }}"
+    groups: sudo,docker
+    append: true
+
+- name: Install dependencies
+  apt:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - docker.io
+    - docker-compose
+    - python3-pip
+
+- name: check fo de map bestaat
+  stat:
+    path: "{{ item }}"
+  register: dir_check
+  loop:
+    - ./dbdata
+
+- name: creeer de folders als ze niet bestonden
+  file:
+    path: "{{ item.item }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: docker
+    mode: '0755'
+  loop: "{{ dir_check.results }}"
+  when: not item.stat.exists
+
+- name: zorg ervoor dat docker running en enabled is
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: kopieer docker-compose.yml naar de server
+  copy:
+    src: ./docker-compose.yml
+    dest: /home/{{ ansible_user }}/docker-compose.yml
+    owner: "{{ ansible_user }}"
+    group: "docker"
+    mode: 0644
+
+- name: Stop de containers
+  shell: docker stop db pma
+  failed_when: false
+
+- name: verwijder de containers
+  shell: docker rm db pma
+  failed_when: false
+
+- name: Check of de containers running zijn
+  shell: docker ps -q -a --filter "status=running"
+  register: running_containers
+  failed_when: false
+
+- name: start de containers als ze nog niet aan stonden
+  docker_compose:
+    project_src: /home/{{ ansible_user }}/
+    state: present
+  when: running_containers.stdout_lines | length == 0
