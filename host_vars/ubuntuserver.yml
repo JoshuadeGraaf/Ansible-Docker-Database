@@ -1,0 +1,17 @@
+ansible_host: 192.168.81.135
+ansible_user: joshua
+homedir: /home/joshua
+
+system_packages:
+  - apt-transport-https
+  - curl
+  - software-properties-common
+  - python3-pip
+  - git
+  - vim
+
+mysql:
+  mysql_root_password: "{{ sudo_password }}"
+  mysql_database: "Kerntaak"
+  mysql_user: "{{ ansible_user }}"
+  mysql_user_password: "{{ sudo_password }}"
