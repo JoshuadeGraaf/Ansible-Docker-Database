@@ -1,6 +1,8 @@
 collections:
   - name: community.mysql
     version: 1.3.0
+  - name: community.docker
+    version: 3.4.11
 
 roles:
   - name: bertvv/ansible-role-mariadb
