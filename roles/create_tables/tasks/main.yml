@@ -8,14 +8,14 @@
 
 - name: Copy the table script to the remote server
   copy:
-    src: scripts/diet-table.sql
-    dest: "{{ homedir }}/SQL/diet-table.sql"
+    src: scripts/init.sql
+    dest: "{{ homedir }}/SQL/init.sql"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: "0750"
 
 - name: Copy SQL script to MySQL container
-  command: docker cp {{ homedir }}/SQL/diet-table.sql db:/tmp/diet_script.sql
+  command: docker cp {{ homedir }}/SQL/init.sql /home/{{ ansible_user }}/init.sql
 
 # - name: Execute SQL script
 #   command: docker exec db sh -c "exec mysql -u joshua kerntaak < /tmp/diet_script.sql"
