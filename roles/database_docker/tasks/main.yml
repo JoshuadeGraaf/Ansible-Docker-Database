@@ -1,14 +1,13 @@
-- name: Ensure docker group exists
+- name: "Zorg ervoor dat de group 'Docker' bestaat"
   group:
     name: docker
     state: present
 
-- name: Ensure the user is in the sudo and docker group
+- name: "Zorg ervoor dat de user in de group 'Docker' & 'Sudo' zit"
   user:
     name: "{{ ansible_user }}"
     groups: sudo,docker
     append: true
-
 - name: Install dependencies
   apt:
     name: "{{ item }}"
@@ -18,13 +17,13 @@
     - docker-compose
     - python3-pip
 
-- name: Ensure the docker service is enabled and running
+- name: "Zorg ervoor dat de docker service aan staat"
   service:
     name: docker
     state: started
     enabled: true
 
-- name: Pull the 2 images
+- name: "Pull de 'mysql' & 'phpmyadmin' images"
   docker_image:
     name: "{{ item }}"
     state: present
@@ -33,7 +32,7 @@
     - mysql:5.7
     - phpmyadmin/phpmyadmin:latest
 
-- name: Build up the mysql container
+- name: "Bouw de 'mysql' container"
   docker_container:
     name: db
     image: mysql:5.7
@@ -49,8 +48,8 @@
     volumes:
       - dbdata:/var/lib/mysql
     restart_policy: always
-    
-- name: Build up the phpmyadmin container
+
+- name: "Bouw de 'phpmyadmin' container"
   docker_container:
     name: phpmyadmin
     image: phpmyadmin/phpmyadmin:latest
@@ -64,6 +63,10 @@
       - "8080:80"
     restart_policy: always
 
-- name: Start the docker containers
-  shell:
-    cmd: docker start db phpmyadmin
+- name: "Start de 'mysql & phpmyadmin' containers"
+  docker_container:
+    name: "{{ item }}"
+    state: started
+  loop:
+    - db
+    - phpmyadmin
