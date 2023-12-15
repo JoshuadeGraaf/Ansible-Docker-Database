@@ -20,7 +20,7 @@ ssh keygen
 ``` 
 Copy your SSH key to the machine you want to use this playbook on.
 ```bash
-ssh-copy-id -i ~/.ssh/id_rsa.pub <username>@<ip-address>
+ssh-copy-id <username>@<ip-address>
 ``` 
 Install the requirements.yml to get the needed collections and roles
 ```bash
