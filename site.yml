@@ -5,3 +5,5 @@
   - { role: database_docker, tags: [ 'db']}
   - { role: create_tables, tags: [ 'tables']}
   - { role: general, tags: [ 'general']}
+  - { role: nginx, tags: [ 'nginx']}
+  - { role: delete_docker_containers, tags: [ 'delete']}
