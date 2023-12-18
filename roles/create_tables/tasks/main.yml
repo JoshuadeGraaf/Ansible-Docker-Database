@@ -15,7 +15,7 @@
     mode: "0750"
 
 - name: Copy SQL script to MySQL container
-  command: docker cp {{ homedir }}/SQL/init.sql /home/{{ ansible_user }}/init.sql
+  command: docker cp {{ homedir }}/SQL/init.sql db:/tmp/diet_script.sql
 
-# - name: Execute SQL script
-#   command: docker exec db sh -c "exec mysql -u joshua kerntaak < /tmp/diet_script.sql"
+- name: Execute SQL script
+  command: docker exec db sh -c "exec mysql -u joshua -p{{ mysql.mysql_user_password }} Kerntaak < /tmp/diet_script.sql"
