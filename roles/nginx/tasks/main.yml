@@ -1,0 +1,57 @@
+- name: "Zorg ervoor dat de group 'docker' bestaat"
+  group:
+    name: docker
+    state: present
+
+- name: "Zorg ervoor dat de user in de group 'docker' & 'Sudo' zit"
+  user:
+    name: "{{ ansible_user }}"
+    groups: sudo,docker
+    append: true
+    
+- name: Install dependencies
+  apt:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - docker.io
+    - docker-compose
+    - python3-pip
+
+- name: "Zorg ervoor dat de docker service aan staat"
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: "Maak een folder met de naam 'NginxPHP/nginx' aan"
+  file:
+    path: "{{ homedir }}/NginxPHP/nginx"
+    state: directory
+    mode: 0755
+
+- name: "Kopieer de docker-compose naar de target"
+  copy:
+    src: docker-compose.yml
+    dest: "{{ homedir }}/NginxPHP"
+    owner: "{{ ansible_user }}"
+    group: "docker"
+    mode: 0755    
+
+- name: "kopieer het bestand 'default.conf' & 'Dockerfile' naar de folder 'NginxPHP/nginx'"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ homedir }}/NginxPHP/nginx"
+  loop:
+    - default.conf
+    - Dockerfile
+
+- name: "Kopieer de website naar 'NginxPHP/data'"
+  copy:
+    src: website/
+    dest: "{{ homedir }}/NginxPHP/data"
+
+- name: "Doe de containers aan"
+  command: docker-compose up -d
+  args:
+    chdir: "{{ homedir }}/NginxPHP"
