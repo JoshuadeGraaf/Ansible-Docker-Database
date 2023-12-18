@@ -8,6 +8,7 @@
     name: "{{ ansible_user }}"
     groups: sudo,docker
     append: true
+    
 - name: Install dependencies
   apt:
     name: "{{ item }}"
@@ -38,6 +39,8 @@
     image: mysql:5.7
     state: present
     restart: true
+    networks:
+      - name: nginxphp_internal
     env:
       MYSQL_ROOT_PASSWORD: "{{ mysql.mysql_root_password }}"
       MYSQL_USER: "{{ mysql.mysql_user }}"
@@ -59,6 +62,8 @@
       PMA_PORT: "3306"
       PMA_ARBITRARY: "1"
     restart: true
+    networks:
+      - name: nginxphp_internal
     ports:
       - "8080:80"
     restart_policy: always
