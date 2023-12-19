@@ -1,29 +1,3 @@
-- name: "Zorg ervoor dat de group 'docker' bestaat"
-  group:
-    name: docker
-    state: present
-
-- name: "Zorg ervoor dat de user in de group 'docker' & 'Sudo' zit"
-  user:
-    name: "{{ ansible_user }}"
-    groups: sudo,docker
-    append: true
-    
-- name: Install dependencies
-  apt:
-    name: "{{ item }}"
-    state: latest
-  loop:
-    - docker.io
-    - docker-compose
-    - python3-pip
-
-- name: "Zorg ervoor dat de docker service aan staat"
-  service:
-    name: docker
-    state: started
-    enabled: true
-
 - name: "Maak een folder met de naam 'NginxPHP/nginx' aan"
   file:
     path: "{{ homedir }}/NginxPHP/nginx"
