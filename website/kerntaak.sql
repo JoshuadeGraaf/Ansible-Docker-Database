@@ -36,11 +36,6 @@ CREATE TABLE `login` (
 --
 -- Dumping data for table `login`
 --
-
-INSERT INTO `login` (`user_id`, `username`, `password`) VALUES
-(0, 'Administrator', '906072001efddf3e11e6d2b5782f4777fe038739'),
-(9, 'jgraaf', '906072001efddf3e11e6d2b5782f4777fe038739');
-
 -- --------------------------------------------------------
 
 --
