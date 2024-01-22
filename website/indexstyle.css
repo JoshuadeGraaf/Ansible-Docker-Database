@@ -30,10 +30,11 @@ h2 {
   -webkit-text-fill-color: transparent;
   font: bold 32px sans-serif;
   position: absolute;
+  text-align: center;
   top: 28.6%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
+  transform: translate(-50%, -50%); 
+  padding: 20px; 
   width: 400px;
 }
 
@@ -95,4 +96,9 @@ footer[data-type="footer"] {
   color: #fff;
   padding: 0px;
   text-align: center;
+}
+
+.error-message {
+  text-align: center;
+  color: red;
 }
