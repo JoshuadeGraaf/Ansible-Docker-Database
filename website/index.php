@@ -24,8 +24,8 @@ if (isset($_POST['login'])) {
     <body>
         <center><h2>Provincie Groningen</h2></center>
         <form method="POST">
-            <input type="text" name="username" placeholder="username" required>
-            <input type="password" name="password" placeholder="password" required>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
             <button type="submit" name="login">Login</button>
             <p class="message">Not registered? <a href="Register/registerForm.php">Create an account</a></p>
         </form>
