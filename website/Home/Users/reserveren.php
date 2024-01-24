@@ -1,54 +1,62 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <meta charset="UTF-8">
-  <title>Vergaderkamer reserveren</title>
-  <link rel="stylesheet" href="reserveerstyle.css">
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var kamers = document.querySelectorAll('.kamer img');
+<?php
+session_start();
+include "../../Database/A_declaration.php";
 
-      kamers.forEach(function (kamer) {
-        kamer.addEventListener('click', function () {
-          var dataKamer = kamer.getAttribute('data-kamer');
-          window.location.href = './kamers/' + dataKamer + '.php';
-        });
-      });
-    });
-  </script>
+$user_id = $_SESSION['user_id'];
+$username = $_SESSION['username'];
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reserveer</title>
+    <link rel="stylesheet" href="indexstyle.css">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="deny">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
+    <link rel="stylesheet" href="kamerstyle.css">
 </head>
 <body>
-  <div id="content">
-    <nav class="navbar">
-      <div class="container-fluid">
-        <ul>
-          <li><a href="./homepage.php">Home</a></li>
-          <li><a href="./reserveren.php">Reserveer</a></li>
-          <li><a href="./logout.php">Logout</a></li>
-        </ul>
-      </div>
-    </nav>
-    <h1>Vergaderkamers</h1>
-    <div class="kamers">
-      <div class="kamer">
-        <img src="kamers/kamer1.png" alt="Kamer 1" data-kamer="kamer1">
-        <div class="tekst-container">
-          <p>Tekst voor Kamer 1</p>
-        </div>
-      </div>
-      <div class="kamer">
-        <img src="kamers/kamer2.png" alt="Kamer 2" data-kamer="kamer2">
-        <div class="tekst-container">
-          <p>Tekst voor Kamer 2</p>
-        </div>
-      </div>
-      <div class="kamer">
-        <img src="kamers/kamer3.png" alt="Kamer 3" data-kamer="kamer3">
-        <div class="tekst-container">
-          <p>Tekst voor Kamer 3</p>
-        </div>
-      </div>
+    <div id="content">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <ul>
+                    <li><a href="./homepage.php">Home</a></li>
+                    <li><a href="./reserveren.php">Reserveer</a></li>
+                    <li><a href="./logout.php">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <h2>Kies een ruimte:</h2>
+        <form action="verwerk.php" method="post">
+            <label for="room_id">Ruimte</label>
+            <select name="room_id" id="room_id">
+                <?php
+                $kamer_query = "SELECT * FROM rooms";
+                $stmt = $conn->prepare($kamer_query);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                while ($row = $result->fetch_assoc()) {
+                    $room_id = $row['room_id'];
+                    $room_number = $row['room_number'];
+                    echo "<option value='$room_id'>$room_number</option>";
+                }
+                ?>
+            </select>
+            <br>
+
+            <h2>Vul de datum en tijd in:</h2>
+            <label for="checkin">Check-in datum</label>
+            <input type="datetime-local" id="checkin" name="checkin" required>
+            <br>
+            <label for="checkout">Check-out datum</label>
+            <input type="datetime-local" id="checkout" name="checkout" required>
+            <br>
+            <input type="submit" value="Verzenden">
+        </form>
     </div>
-  </div>
 </body>
 </html>
