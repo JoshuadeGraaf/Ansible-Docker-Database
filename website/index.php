@@ -1,3 +1,16 @@
+<?php
+session_start();
+include "Database/A_declaration.php";
+include "Scripts/loginScript.php";
+
+if (isset($_POST['login'])) {
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    login($conn, $username, $password); // Call the login function from loginScript.php
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,14 +29,5 @@
         <input type="password" name="password" class="input-field" placeholder="Password" required>
         <button type="submit" name="login">Login</button>
         <p class="message">Not registered? <a href="Register/registerForm.php">Create an account</a></p>
-
-        <?php
-            // Check for the error message and display it
-            if (isset($_SESSION['msg'])) {
-                echo '<p class="error-message">' . $_SESSION['msg'] . '</p>';
-                unset($_SESSION['msg']); // Clear the message to avoid displaying it on subsequent requests
-            }
-        ?>
-    </form>
 </body>
 </html>

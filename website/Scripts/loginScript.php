@@ -20,11 +20,9 @@ function login($conn, $username, $password) {
                 header('location: ../Home/Users/homepage.php');
             }
             exit();
-        } else {
-            echo "<p>Verkeerde username & password combinatie</p>";
         }
     } else {
-        echo "<p>Verkeerde username & password combinatie</p>";
+        echo "User not found";
     }
 }
 ?>
