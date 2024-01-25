@@ -1,0 +1,1 @@
+<a href="home.php"><img src="header.png" alt="DeskTop.nl" width="800" height="40"></a><br>

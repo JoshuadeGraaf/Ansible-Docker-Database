@@ -1,0 +1,46 @@
+/* Navigation bar styling */
+nav {
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: flex-end;
+    /* align navigation links to the right */
+    align-items: center;
+    height: 70px;
+    padding: 0 20px;
+    /* decrease padding to keep links closer together */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    font-family: 'Roboto', sans-serif;
+    /* change font family to Roboto */
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    /* increase link padding to make clickable area larger */
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    /* change font family to Roboto */
+    display: flex;
+    /* add display flex to center link content vertically */
+    align-items: center;
+}
+
+nav a:hover {
+    background-color: #555;
+}
+
+nav a:not(:last-child) {
+    margin-right: 20px;
+    /* add margin between navigation links */
+}
+
+p {
+    font-family: 'Roboto', sans-serif;
+    /* change font family to Roboto */
+}
