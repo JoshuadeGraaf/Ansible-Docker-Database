@@ -25,7 +25,10 @@
     src: website/
     dest: "{{ homedir }}/NginxPHP/data"
 
-- name: "Doe de containers aan"
-  command: docker-compose up -d
-  args:
-    chdir: "{{ homedir }}/NginxPHP"
+- name: "Start de 'mysql & phpmyadmin' containers"
+  docker_container:
+    name: "{{ item }}"
+    state: started
+  loop:
+    - nginxphp_nginx_1
+    - nginxphp_php_1
